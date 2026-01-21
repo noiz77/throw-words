@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Throw Words 设置</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header class="header">
+      <div class="logo">📚</div>
+      <div class="header-text">
+        <h1>Throw Words</h1>
+        <p class="subtitle">生词投掷器</p>
+      </div>
+    </header>
+
+    <!-- 状态指示 -->
+    <div class="status-card" id="statusCard">
+      <div class="status-left">
+        <span class="status-icon" id="statusIcon">⏳</span>
+        <span class="status-label" id="statusLabel">检测中...</span>
+      </div>
+      <span class="status-version" id="statusDesc">正在检查连接</span>
+    </div>
+
+    <!-- 设置表单 -->
+    <div class="settings-section">
+      <label class="input-label" for="webAppUrl">Google Apps Script URL</label>
+      <input type="url" id="webAppUrl" class="input-field" placeholder="https://script.google.com/macros/s/.../exec">
+      <p class="input-hint">
+        请参考 <a href="#" id="guideLink">部署指南</a> 建立自己的 Google Sheet 和 URL
+      </p>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="actions">
+      <button class="btn btn-secondary" id="testBtn">
+        <span class="btn-icon">🧪</span>
+        测试链接
+      </button>
+      <button class="btn btn-primary" id="saveBtn">
+        <span class="btn-icon">💾</span>
+        保存设置
+      </button>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="usage-section">
+      <h3 class="section-title">📖 使用方法</h3>
+      <ol class="usage-list">
+        <li>在任意网页上用鼠标 <strong>划选英文单词</strong></li>
+        <li>点击出现的 <span class="emoji-btn">📚</span> 按钮</li>
+        <li>单词自动发送到你的 <strong>Google Sheet</strong></li>
+      </ol>
+    </div>
+
+    <!-- 快捷链接（移到使用方法下方） -->
+    <a href="#" class="sheet-link" id="openSheetBtn" style="display: none;">
+      <span class="link-icon">📋</span>
+      <span class="link-text">打开生词本</span>
+    </a>
+
+    <!-- 底部 -->
+    <footer class="footer">
+      <span>Made with 💚 for English Learners</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
