@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         // 打开项目中的部署指南（如果在本地）或显示提示
         chrome.tabs.create({
-            url: 'https://github.com' // 可替换为实际的指南 URL
+            url: 'https://github.com/noiz77/throw-words/blob/main/google-apps-script/DEPLOY_GUIDE.md'
         });
     });
 
