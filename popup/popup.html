@@ -59,11 +59,17 @@
       </ol>
     </div>
 
-    <!-- 快捷链接（移到使用方法下方） -->
-    <a href="#" class="sheet-link" id="openSheetBtn" style="display: none;">
-      <span class="link-icon">📋</span>
-      <span class="link-text">打开生词本</span>
-    </a>
+    <!-- 快捷链接（两个按钮并列） -->
+    <div class="sheet-actions" id="sheetActions" style="display: none;">
+      <a href="#" class="sheet-link" id="openSheetBtn">
+        <span class="link-icon">📋</span>
+        <span class="link-text">打开生词本</span>
+      </a>
+      <button class="sheet-link export-btn" id="exportBtn">
+        <span class="link-icon">📤</span>
+        <span class="link-text">导出 txt 格式</span>
+      </button>
+    </div>
 
     <!-- 底部 -->
     <footer class="footer">

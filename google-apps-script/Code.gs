@@ -47,10 +47,16 @@ function doPost(e) {
   }
 }
 
-// 处理 GET 请求（用于测试连接）
+// 处理 GET 请求（用于测试连接或导出单词）
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheetUrl = sheet.getUrl();
+  
+  // 检查是否为导出请求
+  const action = e.parameter.action;
+  if (action === 'export') {
+    return handleExportWords();
+  }
   
   return createResponse({ 
     success: true, 
@@ -58,6 +64,36 @@ function doGet(e) {
     version: '1.0.0',
     sheetUrl: sheetUrl
   });
+}
+
+// 导出所有单词（按字母顺序排序）
+function handleExportWords() {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = sheet.getRange('A:A').getValues();
+    
+    // 提取单词（跳过表头，过滤空值）
+    const words = [];
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][0] && data[i][0].toString().trim() !== '') {
+        words.push(data[i][0].toString().trim().toLowerCase());
+      }
+    }
+    
+    // 按字母顺序排序
+    words.sort((a, b) => a.localeCompare(b));
+    
+    return createResponse({
+      success: true,
+      words: words,
+      count: words.length
+    });
+  } catch (error) {
+    return createResponse({
+      success: false,
+      message: '导出失败: ' + error.toString()
+    });
+  }
 }
 
 // 创建 CORS 响应

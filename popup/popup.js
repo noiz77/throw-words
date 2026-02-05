@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusLabel = document.getElementById('statusLabel');
     const statusDesc = document.getElementById('statusDesc');
     const openSheetBtn = document.getElementById('openSheetBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const sheetActions = document.getElementById('sheetActions');
 
     // 加载已保存的设置
     loadSettings();
@@ -64,6 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 导出生词本
+    exportBtn.addEventListener('click', async () => {
+        await exportWords();
+    });
+
     /**
      * 加载设置
      */
@@ -77,9 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus('disconnected', '📋', '未配置', '请在下方输入 Web App URL');
         }
 
-        // 显示/隐藏打开生词本按钮
+        // 显示/隐藏操作按钮区域
         if (settings.sheetUrl) {
-            openSheetBtn.style.display = 'flex';
+            sheetActions.style.display = 'flex';
         }
     }
 
@@ -107,15 +114,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 保存并显示 Sheet URL
                 if (response.sheetUrl) {
                     await chrome.storage.sync.set({ sheetUrl: response.sheetUrl });
-                    openSheetBtn.style.display = 'flex';
+                    sheetActions.style.display = 'flex';
                 }
             } else {
                 updateStatus('disconnected', '❌', '连接失败', response.message || '请检查 URL');
-                openSheetBtn.style.display = 'none';
+                sheetActions.style.display = 'none';
             }
         } catch (error) {
             updateStatus('disconnected', '❌', '连接错误', error.message);
-            openSheetBtn.style.display = 'none';
+            sheetActions.style.display = 'none';
         } finally {
             testBtn.disabled = false;
             saveBtn.disabled = false;
@@ -150,5 +157,59 @@ document.addEventListener('DOMContentLoaded', () => {
     function shakeInput(element) {
         element.classList.add('shake');
         setTimeout(() => element.classList.remove('shake'), 300);
+    }
+
+    /**
+     * 导出生词本到 txt 文件
+     */
+    async function exportWords() {
+        exportBtn.disabled = true;
+        const originalText = exportBtn.querySelector('.link-text').textContent;
+        exportBtn.querySelector('.link-text').textContent = '导出中...';
+
+        try {
+            const response = await chrome.runtime.sendMessage({ action: 'exportWords' });
+
+            if (response.success && response.words) {
+                if (response.words.length === 0) {
+                    alert('生词本为空，没有可导出的单词');
+                    return;
+                }
+
+                // 用逗号连接单词
+                const content = response.words.join(', ');
+
+                // 创建并下载文件
+                downloadFile(content, 'vocabulary.txt', 'text/plain');
+
+                exportBtn.querySelector('.link-text').textContent = '导出成功!';
+                setTimeout(() => {
+                    exportBtn.querySelector('.link-text').textContent = originalText;
+                }, 2000);
+            } else {
+                alert('导出失败: ' + (response.message || '未知错误'));
+                exportBtn.querySelector('.link-text').textContent = originalText;
+            }
+        } catch (error) {
+            alert('导出出错: ' + error.message);
+            exportBtn.querySelector('.link-text').textContent = originalText;
+        } finally {
+            exportBtn.disabled = false;
+        }
+    }
+
+    /**
+     * 下载文件
+     */
+    function downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 });

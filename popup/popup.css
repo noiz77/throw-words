@@ -308,20 +308,29 @@ body {
     vertical-align: middle;
 }
 
+/* 快捷链接容器 - 两个按钮并列 */
+.sheet-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
 /* 打开生词本链接 - 40px高, 6px圆角, 14px字号 */
 .sheet-link {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
-    padding: 0 16px;
-    margin-bottom: 18px;
+    padding: 0 12px;
     background: var(--bg-white);
     border: 1px solid var(--border-gray);
     border-radius: 6px;
     text-decoration: none;
     color: var(--text-dark);
     transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: inherit;
 }
 
 .sheet-link:hover {
@@ -334,13 +343,19 @@ body {
     transform: translateY(0);
 }
 
+.sheet-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
 .sheet-link .link-icon {
     font-size: 14px;
 }
 
 .sheet-link .link-text {
-    margin-left: 8px;
-    font-size: 14px;
+    margin-left: 6px;
+    font-size: 13px;
     font-weight: 500;
 }
 
