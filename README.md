@@ -77,6 +77,19 @@ throw-words/
 
 收集的生词可以导出并与各种 AI 学习工具配合使用：
 
+### 📤 导出 txt 格式
+
+插件内置导出功能，方便将生词本导入到其他背单词应用：
+
+1. 点击浏览器工具栏的 📚 图标
+2. 点击「**导出 txt 格式**」按钮
+3. 自动下载 `vocabulary.txt` 文件
+
+**导出格式**：单词按 a-z 字母顺序排列，用逗号分隔
+```
+apple, banana, cat, dog, elephant...
+```
+
 ### Gemini Canvas
 将 Google Sheet 分享给 Gemini，让它帮你：
 - 生成单词释义和例句

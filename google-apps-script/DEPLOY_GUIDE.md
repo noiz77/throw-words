@@ -64,7 +64,12 @@
 在浏览器中直接访问你的 Web App URL，如果看到类似以下内容，说明部署成功：
 
 ```json
-{"success":true,"message":"Throw Words API 运行正常","version":"1.0.0"}
+{"success":true,"message":"Throw Words API 运行正常","version":"1.0.0","sheetUrl":"https://docs.google.com/spreadsheets/d/xxx/edit"}
+```
+
+**测试导出功能**：在 URL 末尾添加 `?action=export`，应返回：
+```json
+{"success":true,"words":["apple","banana","cat"],"count":3}
 ```
 
 ---
