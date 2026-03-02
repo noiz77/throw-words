@@ -85,9 +85,14 @@ throw-words/
 2. 点击「**导出 txt 格式**」按钮
 3. 自动下载 `vocabulary.txt` 文件
 
-**导出格式**：单词按 a-z 字母顺序排列，用逗号分隔
-```
-apple, banana, cat, dog, elephant...
+**导出格式**：单词按 a-z 字母顺序排列，每个单词单独占一行
+```text
+apple
+banana
+cat
+dog
+elephant
+...
 ```
 
 ### Gemini Canvas
