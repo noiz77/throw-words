@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // 用逗号连接单词
-                const content = response.words.join(', ');
+                // 用换行连接单词
+                const content = response.words.join('\n');
 
                 // 创建并下载文件
                 downloadFile(content, 'vocabulary.txt', 'text/plain');
